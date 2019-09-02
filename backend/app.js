@@ -23,3 +23,22 @@ app.use((req, res, next) => {
             });  
         });
   });
+
+  app.post('/api/recipes', (req, res) =>{
+      const recipes = new Recipe({
+          title: req.body.title,
+          ingredients: req.body.ingredients,
+          instructions: req.bosy.instructions,
+          difficulty: req.body.difficulty,
+          time: req.body.time
+      });
+      recipes.save().then(() =>{
+          res.status(201).json({
+              message: 'Recipe Entery Created'
+          })
+      }).catch((error) =>{
+          res.status(400).json({
+              error
+          });
+      });
+  });

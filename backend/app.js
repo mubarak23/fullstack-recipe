@@ -55,3 +55,25 @@ app.use((req, res, next) => {
       });
   });
 
+  app.put('/api/recipes/:id', (req, res) =>{
+    const recipes = new Recipe({
+        _id: req.params.id,
+        title: req.body.title,
+        ingredients: req.body.ingredients,
+        instructions: req.bosy.instructions,
+        difficulty: req.body.difficulty,
+        time: req.body.time
+    });
+    Recipe.updateOne({ _id: req.params.id}, recipes).then(
+        () =>{
+            res.status(201).json({
+                message: 'Recipe Details updated Successfully'
+            })
+        }
+    ).catch((error) =>{
+        res.status(401).json({
+            error
+        });
+    });
+  });
+

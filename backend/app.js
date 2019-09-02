@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const Recipe = require('./models/receipe');
 
 const app = express();
 app.use(bodyParser.json());
@@ -12,7 +13,13 @@ app.use((req, res, next) => {
   });
 
   app.get('/api/recipes', (req, res) =>{
-        res.status(200).json({
-            message: 'Thing on their way'
+        Recipe.find().then((recipes) =>{
+            res.status(200).json({
+                recipes
+            })
+        }).catch((error) =>{
+            res.status(400).json({
+                error
+            });  
         });
   });

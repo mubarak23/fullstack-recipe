@@ -12,23 +12,11 @@ app.use((req, res, next) => {
     next();
   });
 
-  app.get('/api/recipes', (req, res) =>{
-        Recipe.find().then((recipes) =>{
-            res.status(200).json({
-                recipes
-            })
-        }).catch((error) =>{
-            res.status(400).json({
-                error
-            });  
-        });
-  });
-
-  app.post('/api/recipes', (req, res) =>{
+  app.post('/api/recipes/', (req, res) =>{
       const recipes = new Recipe({
           title: req.body.title,
           ingredients: req.body.ingredients,
-          instructions: req.bosy.instructions,
+          instructions: req.body.instructions,
           difficulty: req.body.difficulty,
           time: req.body.time
       });
@@ -60,7 +48,7 @@ app.use((req, res, next) => {
         _id: req.params.id,
         title: req.body.title,
         ingredients: req.body.ingredients,
-        instructions: req.bosy.instructions,
+        instructions: req.body.instructions,
         difficulty: req.body.difficulty,
         time: req.body.time
     });
@@ -77,6 +65,16 @@ app.use((req, res, next) => {
     });
   });
 
+  app.get('/api/recipes', (req, res) =>{
+    Recipe.find().then((recipes) =>{
+        res.status(200).json(recipes)
+    }).catch((error) =>{
+        res.status(400).json({
+            error
+        });  
+    });
+});
+
 app.delete('/api/recipes/:id', (req, res) =>{
     Recipe.deleteOne({_id: req.params.id}).then(() =>{
         res.status(201).json({
@@ -88,3 +86,5 @@ app.delete('/api/recipes/:id', (req, res) =>{
         });
     });
 });
+
+module.exports = app;

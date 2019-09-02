@@ -42,3 +42,16 @@ app.use((req, res, next) => {
           });
       });
   });
+
+  app.get('/api/recipes/:id', (req, res) =>{
+      Recipe.findOne({
+          _id: req.params.id
+      }).then((recipes) =>{
+          res.status(200).json(recipes)
+      }).catch((error) =>{
+          res.status(400).json({
+              error
+          });
+      });
+  });
+

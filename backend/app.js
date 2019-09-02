@@ -77,3 +77,14 @@ app.use((req, res, next) => {
     });
   });
 
+app.delete('/api/recipes/:id', (req, res) =>{
+    Recipe.deleteOne({_id: req.params.id}).then(() =>{
+        res.status(201).json({
+            message: 'Recipe deleted succefully'
+        })
+    }).catch((error) =>{
+        res.status(401).json({
+            message: 'Unable to delete recipes'
+        });
+    });
+});
